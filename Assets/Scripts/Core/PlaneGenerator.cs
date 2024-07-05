@@ -43,36 +43,66 @@ namespace Brain.Core
 
         private void ChooseFace()
         {
-            int face = Random.Range(0, 3);
+            int face = Random.Range(0, 6);
 
             switch(face)
             {
-                case 0: //x face -x -> +x
+                case 0: //x face
                     for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            if (Physics.Raycast(new Vector3(-2, row[i], col[j]), Vector3.right)) isHit[i * 3 + j] = true;
+                            if (Physics.Raycast(new Vector3(2, row[i], col[j]), Vector3.left, 1.0f)) isHit[i * 3 + j] = true;
                             else isHit[i * 3 + j] = false;
                         }
                     }
                     break;
-                case 1: //y face -y -> +y
+                case 1: //-x face
                     for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            if (Physics.Raycast(new Vector3(row[i], -2, col[j]), Vector3.up)) isHit[i * 3 + j] = true;
+                            if (Physics.Raycast(new Vector3(-2, row[i], col[j]), Vector3.right, 1.0f)) isHit[i * 3 + j] = true;
                             else isHit[i * 3 + j] = false;
                         }
                     }
                     break;
-                case 2: //z face -z -> +z
+                case 2: //y face
                     for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < 3; j++)
                         {
-                            if (Physics.Raycast(new Vector3(col[j], row[i], -2), Vector3.forward)) isHit[i * 3 + j] = true;
+                            if (Physics.Raycast(new Vector3(row[i], 2, col[j]), Vector3.down, 1.0f)) isHit[i * 3 + j] = true;
+                            else isHit[i * 3 + j] = false;
+                        }
+                    }
+                    break;
+                case 3: //-y face
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (Physics.Raycast(new Vector3(row[i], -2, col[j]), Vector3.up, 1.0f)) isHit[i * 3 + j] = true;
+                            else isHit[i * 3 + j] = false;
+                        }
+                    }
+                    break;
+                case 4: //z face
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (Physics.Raycast(new Vector3(col[j], row[i], 2), Vector3.back, 1.0f)) isHit[i * 3 + j] = true;
+                            else isHit[i * 3 + j] = false;
+                        }
+                    }
+                    break;
+                case 5: //-z face
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (Physics.Raycast(new Vector3(col[j], row[i], -2), Vector3.forward, 1.0f)) isHit[i * 3 + j] = true;
                             else isHit[i * 3 + j] = false;
                         }
                     }

@@ -9,7 +9,6 @@ namespace Brain.Core
     public class CubeDetector : MonoBehaviour
     {
         public float elapsedTime;
-        public bool collisionHappened = false;
 
         private int[] row = { -1, 0, 1 };
         private int[] col = { 1, 0, -1 };
@@ -26,7 +25,7 @@ namespace Brain.Core
 
         public void DetectCube()
         {
-            if (elapsedTime > 15f)
+            if (elapsedTime > 15f) //임시 판정 타이밍, 나중에 speed라든가 값이 지면 수정해야 될 것 같습니다
             {
                 elapsedTime = 0f;
                 if(!Determine())
@@ -35,27 +34,22 @@ namespace Brain.Core
                 }
                 OnKeepGoing?.Invoke();
             }
-
-            if (collisionHappened)
-            {
-                OnGameOver?.Invoke();
-            }
         }
 
         private bool Determine()
         {
-            RaycastHit hit;
-            bool ret = false;
+            RaycastHit[] hits;
             for (int i = 0; i < 3; ++i)
             {
                 for (int j = 0; j < 3; ++j)
                 {
                     Vector3 curPos = new Vector3(-11f, row[i], col[j]);
-                    ret = Physics.Raycast(curPos, Vector3.right, out hit, 10f);
-                    if (!ret) return ret;
+                    hits = Physics.RaycastAll(curPos, Vector3.right, 1.0f);
+
+                    if (hits.Length > 1) return false;
                 }
             }
-            return ret;
+            return true;
         }
     }
 }
