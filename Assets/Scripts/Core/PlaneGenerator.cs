@@ -22,7 +22,7 @@ namespace Brain.Core
 
         public void Start()
         {
-            GeneratePlane();
+            //GeneratePlane();
         }
 
         public void GeneratePlane()

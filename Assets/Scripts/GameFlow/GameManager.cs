@@ -14,6 +14,12 @@ namespace Brain.GameFlow
         [SerializeField] private InputReceiver inputReceiver = null;
 
         private bool isGameEnded = false;
+        private GameObject cube;
+
+        private void Start()
+        {
+            Init();
+        }
 
         public void Init()
         {
@@ -32,6 +38,9 @@ namespace Brain.GameFlow
             {
                 // 큐브 생성
                 cubeGenerator.GenerateCube();
+
+                cube = GameObject.FindWithTag("cube");
+                cubeController = cube.GetComponent<CubeController>();
 
                 // 판 생성
                 planeGenerator.GeneratePlane();

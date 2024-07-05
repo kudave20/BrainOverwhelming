@@ -24,12 +24,6 @@ namespace Brain.Core
         private int[] dy = { 0, 1, 0, 0, -1, 0 };
         private int[] dz = { 0, 0, 1, 0, 0, -1 };
 
-        private void Start()
-        {
-            Init(inputReceiver);
-            GenerateCube();
-        }
-
         public void Init(InputReceiver inputReceiver)
         {
             this.inputReceiver = inputReceiver;
