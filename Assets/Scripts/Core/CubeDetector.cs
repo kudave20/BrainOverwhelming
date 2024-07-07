@@ -1,8 +1,5 @@
-using Brain.GameFlow;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Brain.Core
 {
@@ -13,8 +10,6 @@ namespace Brain.Core
         private int[] row = { -1, 0, 1 };
         private int[] col = { 1, 0, -1 };
 
-        public UnityEvent OnGameOver, OnKeepGoing;
-
         /// <summary>
         /// 큐브 판정
         /// </summary>
@@ -23,16 +18,15 @@ namespace Brain.Core
             elapsedTime += Time.deltaTime;
         }
 
-        public void DetectCube()
+        public bool DetectCube()
         {
-            if (elapsedTime > 15f) //임시 판정 타이밍, 나중에 speed라든가 값이 지면 수정해야 될 것 같습니다
+            if (!Determine())
             {
-                elapsedTime = 0f;
-                if(!Determine())
-                {
-                    OnGameOver?.Invoke();
-                }
-                OnKeepGoing?.Invoke();
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

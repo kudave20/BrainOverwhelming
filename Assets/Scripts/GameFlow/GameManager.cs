@@ -18,8 +18,6 @@ namespace Brain.GameFlow
         public void Start()
         {
             Init();
-            cubeDetector.OnGameOver.AddListener(GameOver);
-            cubeDetector.OnKeepGoing.AddListener(KeepGoing);
         }
 
         public void Init()
@@ -47,31 +45,21 @@ namespace Brain.GameFlow
                 yield return cubeController.TranslateCube();
 
                 // 판정
-                /*if (cubeDetector.DetectCube())
+                if (cubeDetector.DetectCube())
                 {
                     // 재시작
+                    Debug.Log("Stage Clear!");
                     cubeGenerator.ClearCube();
                 }
                 else
                 {
                     // 게임 오버
+                    Debug.Log("Game Over!");
                     isGameEnded = true;
-                }*/
+                }
 
-                cubeDetector.DetectCube();
+                //cubeDetector.DetectCube();
             }
-        }
-
-        private void GameOver()
-        {
-            Debug.Log("Game Over!");
-            isGameEnded = true;
-        }
-
-        private void KeepGoing()
-        {
-            Debug.Log("Stage Clear!");
-            cubeGenerator.ClearCube();
         }
     }
 }
