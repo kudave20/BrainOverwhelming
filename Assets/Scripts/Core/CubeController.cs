@@ -21,7 +21,7 @@ namespace Brain.Core
         /// </summary>
         public IEnumerator TranslateCube()
         {
-            while(transform.position.x >= -10f)
+            while (transform.position.x > -10f)
             {
                 elapsedTime += Time.deltaTime;
                 transform.position = Vector3.Lerp(initCubePos, destination, elapsedTime * speed / 10);

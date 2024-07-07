@@ -9,12 +9,12 @@ namespace Brain.GameFlow
     {
         [SerializeField] private CubeGenerator cubeGenerator = null;
         [SerializeField] private PlaneGenerator planeGenerator = null;
-        [SerializeField] private CubeController cubeController = null;
         [SerializeField] private CubeDetector cubeDetector = null;
         [SerializeField] private InputReceiver inputReceiver = null;
 
+        private CubeController cubeController = null;
+
         private bool isGameEnded = false;
-        private GameObject cube;
 
         private void Start()
         {
@@ -24,7 +24,7 @@ namespace Brain.GameFlow
         public void Init()
         {
             // 각종 초기화
-            cubeGenerator.Init(inputReceiver);
+            cubeController = cubeGenerator.Init(inputReceiver).GetComponent<CubeController>();
 
             StartCoroutine(GameFlow());
         }
@@ -39,8 +39,8 @@ namespace Brain.GameFlow
                 // 큐브 생성
                 cubeGenerator.GenerateCube();
 
-                cube = GameObject.FindWithTag("cube");
-                cubeController = cube.GetComponent<CubeController>();
+                //cube = GameObject.FindWithTag("cube");
+                //cubeController = cube.GetComponent<CubeController>();
 
                 // 판 생성
                 planeGenerator.GeneratePlane();
