@@ -39,9 +39,6 @@ namespace Brain.GameFlow
                 // 큐브 생성
                 cubeGenerator.GenerateCube();
 
-                //cube = GameObject.FindWithTag("cube");
-                //cubeController = cube.GetComponent<CubeController>();
-
                 // 판 생성
                 planeGenerator.GeneratePlane();
 

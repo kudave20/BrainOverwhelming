@@ -5,8 +5,6 @@ namespace Brain.Core
 {
     public class CubeDetector : MonoBehaviour
     {
-        public float elapsedTime;
-
         private int[] row = { -1, 0, 1 };
         private int[] col = { 1, 0, -1 };
 
@@ -15,22 +13,10 @@ namespace Brain.Core
         /// </summary>
         private void Update()
         {
-            elapsedTime += Time.deltaTime;
+            //elapsedTime += Time.deltaTime;
         }
 
         public bool DetectCube()
-        {
-            if (!Determine())
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private bool Determine()
         {
             RaycastHit[] hits;
             for (int i = 0; i < 3; ++i)
