@@ -15,6 +15,11 @@ namespace Brain.GameFlow
 
         private bool isGameEnded = false;
 
+        public void Start()
+        {
+            Init();
+        }
+
         public void Init()
         {
             // 각종 초기화
@@ -43,13 +48,17 @@ namespace Brain.GameFlow
                 if (cubeDetector.DetectCube())
                 {
                     // 재시작
+                    Debug.Log("Stage Clear!");
                     cubeGenerator.ClearCube();
                 }
                 else
                 {
                     // 게임 오버
+                    Debug.Log("Game Over!");
                     isGameEnded = true;
                 }
+
+                //cubeDetector.DetectCube();
             }
         }
     }
