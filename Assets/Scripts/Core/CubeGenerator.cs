@@ -10,8 +10,7 @@ namespace Brain.Core
 
         private InputReceiver inputReceiver = null;
 
-        //internal int difficulty;
-        public int difficulty;
+        internal int difficulty;
         private GameObject cubeInstance;
         private Transform cubeParentTransform;
         private int cubeLimit;  //가능한 총 큐브 개수 = 전체 부피
