@@ -15,9 +15,17 @@ namespace Brain.GameFlow
         private CubeController cubeController = null;
 
         private bool isGameEnded = false;
+        private enum Difficulty
+        {
+            easy,
+            normal,
+            hard
+        };
+        [SerializeField] private Difficulty difficulty = Difficulty.normal;
 
         private void Start()
         {
+            cubeGenerator.difficulty = (int)difficulty;
             Init();
         }
 

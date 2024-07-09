@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +6,12 @@ namespace Brain.Core
 {
     public class CubeGenerator : MonoBehaviour
     {
-        [SerializeField] private GameObject cubePrefab = null;
+        [SerializeField] private List<GameObject> cubePrefabs = null;
 
         private InputReceiver inputReceiver = null;
 
+        //internal int difficulty;
+        public int difficulty;
         private GameObject cubeInstance;
         private Transform cubeParentTransform;
         private int cubeLimit;  //가능한 총 큐브 개수 = 전체 부피
@@ -18,7 +19,7 @@ namespace Brain.Core
         private int sideLength; //한 변 길이
         private int sideArea;   //한 면 넓이
         private List<Vector3Int> occupiedPostions = new List<Vector3Int>();
-        private bool[,,] boolOccupiedPositions = new bool[3, 3, 3];
+        private bool[,,] boolOccupiedPositions = new bool[5, 5, 5];
         private List<Vector3Int> possiblePositions = new List<Vector3Int>();
         private int[] dx = { 1, 0, 0, -1, 0, 0 };
         private int[] dy = { 0, 1, 0, 0, -1, 0 };
@@ -27,8 +28,8 @@ namespace Brain.Core
         public GameObject Init(InputReceiver inputReceiver)
         {
             this.inputReceiver = inputReceiver;
-            cubeInstance = Instantiate(cubePrefab);
-            sideLength = 3;
+            cubeInstance = Instantiate(cubePrefabs[difficulty]);
+            sideLength = difficulty + 3;
             sideArea = sideLength * sideLength;
             cubeLimit = sideLength * sideArea;
             cubeParentTransform = cubeInstance.transform;
@@ -92,7 +93,6 @@ namespace Brain.Core
         /// </summary>
         public void ClearCube()
         {
-            // 큐브 제거
             cubeParentTransform = cubeInstance.transform;
             foreach(Transform child in cubeParentTransform)
             {
@@ -102,7 +102,7 @@ namespace Brain.Core
             possiblePositions.Clear();
             //System.Array.Clear(possiblePositions, 0, boolOccupiedPositions.Length);
 
-            // inputReceiver.Clear();
+            //inputReceiver.Clear();
         }
     }
 }

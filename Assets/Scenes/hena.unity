@@ -289,7 +289,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10dbd077bb3b2524baaa0a3de7b8f5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
+  cubePrefabs:
+  - {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
+  - {fileID: 1226343838704166835, guid: e83f31cf595eadf42bb914c066ac441f, type: 3}
+  - {fileID: 451608518045246614, guid: aa5e8b0a66f26fe4fbb80f441d009da4, type: 3}
+  difficulty: 0
 --- !u!4 &811805437
 Transform:
   m_ObjectHideFlags: 0
@@ -336,9 +340,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeGenerator: {fileID: 811805436}
   planeGenerator: {fileID: 108030012}
-  cubeController: {fileID: 0}
   cubeDetector: {fileID: 0}
   inputReceiver: {fileID: 0}
+  difficulty: 1
 --- !u!4 &877936426
 Transform:
   m_ObjectHideFlags: 0
