@@ -11,22 +11,18 @@ namespace Brain.Core
         /// <summary>
         /// 큐브 판정
         /// </summary>
-        private void Update()
-        {
-            //elapsedTime += Time.deltaTime;
-        }
-
+        
         public bool DetectCube()
         {
             RaycastHit[] hits;
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 3; ++j)
+                for (int j = 0; j < 3; j++)
                 {
                     Vector3 curPos = new Vector3(-11f, row[i], col[j]);
-                    hits = Physics.RaycastAll(curPos, Vector3.right, 1.0f);
+                    hits = Physics.RaycastAll(curPos, Vector3.right * 1.5f, 1.5f);
 
-                    if (hits.Length > 1) return false;
+                    if (hits.Length != 1) return false;
                 }
             }
             return true;
