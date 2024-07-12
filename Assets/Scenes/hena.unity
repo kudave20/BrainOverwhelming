@@ -290,10 +290,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefabs:
-  - {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
-  - {fileID: 1226343838704166835, guid: e83f31cf595eadf42bb914c066ac441f, type: 3}
-  - {fileID: 451608518045246614, guid: aa5e8b0a66f26fe4fbb80f441d009da4, type: 3}
-  difficulty: 0
+  - difficulty: 0
+    cubePrefab: {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
+  - difficulty: 1
+    cubePrefab: {fileID: 1226343838704166835, guid: e83f31cf595eadf42bb914c066ac441f, type: 3}
+  - difficulty: 2
+    cubePrefab: {fileID: 451608518045246614, guid: aa5e8b0a66f26fe4fbb80f441d009da4, type: 3}
 --- !u!4 &811805437
 Transform:
   m_ObjectHideFlags: 0
@@ -342,7 +344,7 @@ MonoBehaviour:
   planeGenerator: {fileID: 108030012}
   cubeDetector: {fileID: 0}
   inputReceiver: {fileID: 0}
-  difficulty: 1
+  difficulty: 0
 --- !u!4 &877936426
 Transform:
   m_ObjectHideFlags: 0
@@ -352,7 +354,7 @@ Transform:
   m_GameObject: {fileID: 877936424}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4235573, y: -1.6100842, z: -1.2964411}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

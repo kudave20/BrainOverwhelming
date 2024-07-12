@@ -12,27 +12,21 @@ namespace Brain.GameFlow
         [SerializeField] private CubeDetector cubeDetector = null;
         [SerializeField] private InputReceiver inputReceiver = null;
 
+        [SerializeField] private Difficulty difficulty = Difficulty.Easy;
+
         private CubeController cubeController = null;
 
         private bool isGameEnded = false;
-        private enum Difficulty
-        {
-            easy,
-            normal,
-            hard
-        };
-        [SerializeField] private Difficulty difficulty = Difficulty.normal;
 
         private void Start()
         {
-            cubeGenerator.difficulty = (int)difficulty;
             Init();
         }
 
         public void Init()
         {
             // 각종 초기화
-            cubeController = cubeGenerator.Init(inputReceiver).GetComponent<CubeController>();
+            cubeController = cubeGenerator.Init(inputReceiver, difficulty).GetComponent<CubeController>();
 
             StartCoroutine(GameFlow());
         }
