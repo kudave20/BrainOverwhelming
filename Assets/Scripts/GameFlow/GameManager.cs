@@ -27,6 +27,7 @@ namespace Brain.GameFlow
         {
             // 각종 초기화
             cubeController = cubeGenerator.Init(inputReceiver, difficulty).GetComponent<CubeController>();
+            planeGenerator.Init(cubeGenerator.OccupiedPositions, cubeGenerator.SideLength);
             inputReceiver.Init(cubeController);
 
             StartCoroutine(GameFlow());

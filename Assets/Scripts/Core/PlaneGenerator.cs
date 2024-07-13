@@ -1,34 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Brain.Core
 {
     public class PlaneGenerator : MonoBehaviour
     {
+        [SerializeField] private GameObject planePrefab = null;
+
+        private List<Vector3Int> occupiedPositions = null;
+        private int sideLength = 3;
+
+        private bool[,] planeInfos = new bool[5, 5];
+
+        private GameObject plane = null;
+
+        public void Init(List<Vector3Int> occupiedPositions, int sideLength)
+        {
+            this.occupiedPositions = occupiedPositions;
+            this.sideLength = sideLength;
+        }
+
         /// <summary>
         /// 판 생성
         /// </summary>
-
-        [SerializeField]
-        private GameObject cubePrefab;
-        [SerializeField]
-        private GameObject planePrefab;
-
-        private GameObject plane;
-        private int[] row = { -1, 0, 1 };
-        private int[] col = { 1, 0, -1 };
-        private bool[] isHit = new bool[9];
-
-        public void Start()
-        {
-            //GeneratePlane();
-        }
-
         public void GeneratePlane()
         {
-            // 판 생성
-
             plane = Instantiate(planePrefab);
 
             ChooseFace();
@@ -37,74 +35,31 @@ namespace Brain.Core
 
             RotatePlane();
 
-            plane.transform.position = new Vector3(-10.0f, 0, 0);
-
+            plane.transform.position = new Vector3(0, 0, 10f);
         }
 
         private void ChooseFace()
         {
-            int face = Random.Range(0, 6);
+            int face = Random.Range(0, 3);
 
-            switch(face)
+            switch (face)
             {
-                case 0: //x face
-                    for (int i = 0; i < 3; i++)
+                case 0: // 전후
+                    foreach (var position in occupiedPositions)
                     {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(2, row[i], col[j]), Vector3.left, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
+                        planeInfos[position.x, position.y] = true;
                     }
                     break;
-                case 1: //-x face
-                    for (int i = 0; i < 3; i++)
+                case 1: // 상하
+                    foreach (var position in occupiedPositions)
                     {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(-2, row[i], col[j]), Vector3.right, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
+                        planeInfos[position.x, position.z] = true;
                     }
                     break;
-                case 2: //y face
-                    for (int i = 0; i < 3; i++)
+                case 2: // 좌우
+                    foreach(var position in occupiedPositions)
                     {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(row[i], 2, col[j]), Vector3.down, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
-                    }
-                    break;
-                case 3: //-y face
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(row[i], -2, col[j]), Vector3.up, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
-                    }
-                    break;
-                case 4: //z face
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(col[j], row[i], 2), Vector3.back, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
-                    }
-                    break;
-                case 5: //-z face
-                    for (int i = 0; i < 3; i++)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (Physics.Raycast(new Vector3(col[j], row[i], -2), Vector3.forward, 1.0f)) isHit[i * 3 + j] = true;
-                            else isHit[i * 3 + j] = false;
-                        }
+                        planeInfos[position.z, position.y] = true;
                     }
                     break;
             }
@@ -112,11 +67,14 @@ namespace Brain.Core
 
         private void MakePlane()
         {
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < sideLength; i++)
             {
-                if (isHit[i])
+                for (int j = 0; j < sideLength; j++)
                 {
-                    plane.transform.GetChild(i).gameObject.SetActive(false);
+                    if (planeInfos[i, j])
+                    {
+                        plane.transform.GetChild(i * sideLength + j).gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -127,22 +85,23 @@ namespace Brain.Core
 
             switch(angle)
             {
-                case 0: //degree 0
+                case 0: // 0도
                     break;
-                case 1: //degree 90
-                    plane.transform.Rotate(new Vector3(90.0f, 0, 0));
+                case 1: // 90도
+                    plane.transform.Rotate(new Vector3(0, 0, 90f));
                     break;
-                case 2: //degree 180
-                    plane.transform.Rotate(new Vector3(180.0f, 0, 0));
+                case 2: // 180도
+                    plane.transform.Rotate(new Vector3(0, 0, 180f));
                     break;
-                case 3: //degree 270
-                    plane.transform.Rotate(new Vector3(270.0f, 0, 0));
+                case 3: // 270도
+                    plane.transform.Rotate(new Vector3(0, 0, 270f));
                     break;
             }    
         }
 
         public void ClearPlane()
         {
+            plane.transform.rotation = Quaternion.identity;
             plane.SetActive(false);
         }
     }

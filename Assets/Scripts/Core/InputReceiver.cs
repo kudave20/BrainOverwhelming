@@ -8,18 +8,6 @@ namespace Brain.Core
     {
         [SerializeField] private float sensitivity = 10f;
 
-        //private GameObject cubeToRotate = null;
-
-        /*public void Init(GameObject cube)
-        {
-            cubeToRotate = cube;
-        }
-
-        public void Clear()
-        {
-            cubeToRotate = null;
-        }*/
-
         private CubeController cubeController = null;
 
         private Vector3 startPosition;

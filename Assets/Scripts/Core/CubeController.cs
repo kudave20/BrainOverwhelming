@@ -20,11 +20,18 @@ namespace Brain.Core
         [SerializeField] private float moveSpeed = 2f;
         [SerializeField] private float rotateSpeed = 3f;
 
-        private readonly Vector3 destination = new Vector3(-10, 0, 0);
-        private readonly Vector3 initCubePos = Vector3.zero;
-        private float elapsedTime = 0;
+        private Vector3 startPosition;
+        private Vector3 destination = new Vector3(0, 0, 10f);
+
+        private float moveTime = 0;
+        private float rotateTime = 0;
 
         private bool isRotating = false;
+
+        public void Init()
+        {
+            startPosition = transform.position;
+        }
 
         private void Update()
         {
@@ -36,16 +43,12 @@ namespace Brain.Core
         /// </summary>
         public IEnumerator TranslateCube()
         {
-            /*
-            while (transform.position.x > -10f)
+            while (transform.position.z > -10f)
             {
-                elapsedTime += Time.deltaTime;
-                transform.position = Vector3.Lerp(initCubePos, destination, elapsedTime * moveSpeed / 10f);
+                moveTime += Time.deltaTime;
+                transform.position = Vector3.Lerp(startPosition, destination, moveTime * moveSpeed * 0.1f);
                 yield return null;
             }
-            */
-
-            yield return new WaitForSeconds(100f);
         }
 
         public IEnumerator RotateCube(Direction direction)
@@ -53,25 +56,25 @@ namespace Brain.Core
             if (isRotating) yield break;
 
             isRotating = true;
-            elapsedTime = 0;
+            rotateTime = 0;
 
             Vector3 towardDirection = direction switch
             {
                 Direction.Right => Vector3.down,
-                Direction.Up => Vector3.forward,
+                Direction.Up => Vector3.right,
                 Direction.Left => Vector3.up,
-                Direction.Down => Vector3.back,
-                Direction.Clock => Vector3.right,
-                Direction.CounterClock => Vector3.left,
+                Direction.Down => Vector3.left,
+                Direction.Clock => Vector3.back,
+                Direction.CounterClock => Vector3.forward,
                 Direction.None => Vector3.zero,
                 _ => Vector3.zero
             };
 
             Quaternion fromRotation = transform.rotation;
 
-            while (elapsedTime * rotateSpeed < 1f)
+            while (rotateTime * rotateSpeed < 1f)
             {
-                elapsedTime += Time.deltaTime;
+                rotateTime += Time.deltaTime;
 
                 transform.Rotate(towardDirection * 90f * Time.deltaTime * rotateSpeed, Space.World);
 
