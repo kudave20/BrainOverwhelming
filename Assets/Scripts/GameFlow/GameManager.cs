@@ -1,6 +1,5 @@
 using Brain.Core;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Brain.GameFlow
@@ -9,12 +8,12 @@ namespace Brain.GameFlow
     {
         [SerializeField] private CubeGenerator cubeGenerator = null;
         [SerializeField] private PlaneGenerator planeGenerator = null;
-        [SerializeField] private CubeDetector cubeDetector = null;
         [SerializeField] private InputReceiver inputReceiver = null;
 
         [SerializeField] private Difficulty difficulty = Difficulty.Easy;
 
         private CubeController cubeController = null;
+        private CubeDetector cubeDetector = null;
 
         private bool isGameEnded = false;
 
@@ -26,10 +25,13 @@ namespace Brain.GameFlow
         public void Init()
         {
             // 각종 초기화
-            cubeController = cubeGenerator.Init(inputReceiver, difficulty).GetComponent<CubeController>();
-            planeGenerator.Init(cubeGenerator.OccupiedPositions, cubeGenerator.SideLength);
+            var (rootCube, sideLength) = cubeGenerator.Init(planeGenerator, difficulty);
+            cubeController = rootCube.GetComponent<CubeController>();
+            cubeController.Init();
+            cubeDetector = planeGenerator.Init(rootCube, sideLength);
             inputReceiver.Init(cubeController);
 
+            // 게임 진행
             StartCoroutine(GameFlow());
         }
 
@@ -55,6 +57,7 @@ namespace Brain.GameFlow
                     // 재시작
                     Debug.Log("Stage Clear!");
                     cubeGenerator.ClearCube();
+                    planeGenerator.ClearPlane();
                 }
                 else
                 {

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Brain.Core
 {
@@ -14,12 +12,27 @@ namespace Brain.Core
 
         private bool[,] planeInfos = new bool[5, 5];
 
+        private CubeDetector cubeDetector = null;
+
+        private GameObject rootCube = null;
         private GameObject plane = null;
 
-        public void Init(List<Vector3Int> occupiedPositions, int sideLength)
+        public CubeDetector Init(GameObject rootCube, int sideLength)
+        {
+            this.rootCube = rootCube;
+            this.sideLength = sideLength;
+
+            plane = Instantiate(planePrefab);
+            plane.transform.position = new Vector3(0, 0, 10f);
+
+            cubeDetector = plane.GetComponent<CubeDetector>();
+
+            return cubeDetector;
+        }
+
+        public void Setup(List<Vector3Int> occupiedPositions)
         {
             this.occupiedPositions = occupiedPositions;
-            this.sideLength = sideLength;
         }
 
         /// <summary>
@@ -27,15 +40,11 @@ namespace Brain.Core
         /// </summary>
         public void GeneratePlane()
         {
-            plane = Instantiate(planePrefab);
-
             ChooseFace();
-
             MakePlane();
-
             RotatePlane();
 
-            plane.transform.position = new Vector3(0, 0, 10f);
+            cubeDetector.Init(planeInfos, sideLength);
         }
 
         private void ChooseFace()
@@ -102,7 +111,11 @@ namespace Brain.Core
         public void ClearPlane()
         {
             plane.transform.rotation = Quaternion.identity;
-            plane.SetActive(false);
+
+            for (int i = 0; i < sideLength * sideLength; i++)
+            {
+                plane.transform.GetChild(i).gameObject.SetActive(true);
+            }
         }
     }
 }

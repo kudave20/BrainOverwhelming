@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Brain.Core
@@ -17,11 +16,11 @@ namespace Brain.Core
 
     public class CubeController : MonoBehaviour
     {
-        [SerializeField] private float moveSpeed = 2f;
+        [SerializeField] private float moveSpeed = 0.2f;
         [SerializeField] private float rotateSpeed = 3f;
 
         private Vector3 startPosition;
-        private Vector3 destination = new Vector3(0, 0, 10f);
+        private Vector3 destination = new Vector3(0, 0, 8.5f);
 
         private float moveTime = 0;
         private float rotateTime = 0;
@@ -33,22 +32,19 @@ namespace Brain.Core
             startPosition = transform.position;
         }
 
-        private void Update()
-        {
-            // elapsedTime += Time.deltaTime;
-        }
-
         /// <summary>
         /// 큐브 이동
         /// </summary>
         public IEnumerator TranslateCube()
         {
-            while (transform.position.z > -10f)
+            while (transform.position.z < 8.5f)
             {
                 moveTime += Time.deltaTime;
-                transform.position = Vector3.Lerp(startPosition, destination, moveTime * moveSpeed * 0.1f);
+                transform.position = Vector3.Lerp(startPosition, destination, moveTime * moveSpeed);
                 yield return null;
             }
+
+            moveTime = 0;
         }
 
         public IEnumerator RotateCube(Direction direction)

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,23 +15,14 @@ namespace Brain.Core
     {
         [SerializeField] private List<CubeWrapper> cubePrefabs = null;
 
-        /// <summary>
-        /// 한 변의 길이
-        /// </summary>
-        public int SideLength => sideLength;
-
-        /// <summary>
-        /// 활성화된 큐브들의 위치
-        /// </summary>
-        public List<Vector3Int> OccupiedPositions => occupiedPositions;
-
         private Dictionary<Difficulty, GameObject> cubePrefabDic = new Dictionary<Difficulty, GameObject>();
 
-        private InputReceiver inputReceiver = null;
+        private PlaneGenerator planeGenerator = null;
 
         private int difficulty;
 
         private GameObject rootCube = null;
+        private Vector3 startPosition;
 
         private int cubeLimit; // 총 큐브 개수
         private int cubeCount; // 생성할 큐브 개수
@@ -47,13 +37,15 @@ namespace Brain.Core
         private int[] deltaY = { 0, 1, 0, 0, -1, 0 };
         private int[] deltaZ = { 0, 0, 1, 0, 0, -1 };
 
-        public GameObject Init(InputReceiver inputReceiver, Difficulty difficulty)
+        public (GameObject, int) Init(PlaneGenerator planeGenerator, Difficulty difficulty)
         {
-            this.inputReceiver = inputReceiver;
+            this.planeGenerator = planeGenerator;
 
             cubePrefabDic = cubePrefabs.ToDictionary(x => x.difficulty, x => x.cubePrefab);
 
             rootCube = Instantiate(cubePrefabDic[difficulty]);
+            
+            startPosition = rootCube.transform.position;
 
             sideLength = difficulty switch
             {
@@ -68,7 +60,7 @@ namespace Brain.Core
 
             ClearCube();
 
-            return rootCube;
+            return (rootCube, sideLength);
         }
 
         /// <summary>
@@ -76,6 +68,8 @@ namespace Brain.Core
         /// </summary>
         public void GenerateCube()
         {
+            rootCube.transform.position = startPosition;
+
             cubeCount = Random.Range(sideLength, cubeLimit - 1);
 
             int startCubeIndex = Random.Range(0, cubeLimit); // 첫 큐브의 인덱스
@@ -99,6 +93,8 @@ namespace Brain.Core
 
                 possiblePositions.RemoveAt(nextCubeIndex);
             }
+
+            planeGenerator.Setup(occupiedPositions);
         }
 
         private void UpdatePosition(Vector3Int position)

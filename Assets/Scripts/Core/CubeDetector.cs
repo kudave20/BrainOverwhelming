@@ -1,18 +1,17 @@
-using System;
 using UnityEngine;
 
 namespace Brain.Core
 {
     public class CubeDetector : MonoBehaviour
     {
-        private GameObject cube = null;
+        private bool[,] planeInfos = null;
 
-        private int[] row = { -1, 0, 1 };
-        private int[] col = { 1, 0, -1 };
+        private int sideLength = 0;
 
-        public void Init(GameObject cube)
+        public void Init(bool[,] planeInfos, int sideLength)
         {
-            this.cube = cube;
+            this.planeInfos = planeInfos;
+            this.sideLength = sideLength;
         }
 
         /// <summary>
@@ -20,14 +19,25 @@ namespace Brain.Core
         /// </summary>
         public bool DetectCube()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < sideLength; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < sideLength; j++)
                 {
-                    Vector3 curPos = new Vector3(-11f, row[i], col[j]);
-                    var hits = Physics.RaycastAll(curPos, Vector3.right * 1.5f, 1.5f);
+                    Vector3 childPosition = transform.GetChild(i * sideLength + j).position;
 
-                    if (hits.Length != 1) return false;
+                    RaycastHit hitInfo;
+                    bool isHit = Physics.Raycast(childPosition, Vector3.back, out hitInfo, 3f);
+
+                    if (planeInfos[i, j] && !isHit)
+                    {
+                        print("NOT HIT!");
+                        return false;
+                    }
+                    if (!planeInfos[i, j] && isHit)
+                    {
+                        print("HIT! " + hitInfo.collider.name);
+                        return false;
+                    }
                 }
             }
 
