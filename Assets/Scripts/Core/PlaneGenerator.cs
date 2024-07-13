@@ -112,6 +112,8 @@ namespace Brain.Core
         {
             plane.transform.rotation = Quaternion.identity;
 
+            System.Array.Clear(planeInfos, 0, planeInfos.Length);
+
             for (int i = 0; i < sideLength * sideLength; i++)
             {
                 plane.transform.GetChild(i).gameObject.SetActive(true);

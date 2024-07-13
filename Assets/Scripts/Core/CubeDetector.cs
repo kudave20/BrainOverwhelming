@@ -24,18 +24,14 @@ namespace Brain.Core
                 for (int j = 0; j < sideLength; j++)
                 {
                     Vector3 childPosition = transform.GetChild(i * sideLength + j).position;
-
-                    RaycastHit hitInfo;
-                    bool isHit = Physics.Raycast(childPosition, Vector3.back, out hitInfo, 3f);
+                    bool isHit = Physics.Raycast(childPosition, Vector3.back, 3f);
 
                     if (planeInfos[i, j] && !isHit)
                     {
-                        print("NOT HIT!");
                         return false;
                     }
                     if (!planeInfos[i, j] && isHit)
                     {
-                        print("HIT! " + hitInfo.collider.name);
                         return false;
                     }
                 }
