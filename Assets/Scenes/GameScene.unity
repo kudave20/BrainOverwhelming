@@ -154,7 +154,7 @@ MonoBehaviour:
   cubeGenerator: {fileID: 893744794}
   planeGenerator: {fileID: 810039938}
   inputReceiver: {fileID: 433481408}
-  difficulty: 0
+  difficulty: 1
 --- !u!4 &121190785
 Transform:
   m_ObjectHideFlags: 0
@@ -338,7 +338,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5950459c190427f4bb0b8727a6aaf618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planePrefab: {fileID: 2499700037370539053, guid: 6d9fe16928c40754e901c8f0adabf220, type: 3}
+  planePrefabs:
+  - difficulty: 0
+    prefab: {fileID: 2499700037370539053, guid: 6d9fe16928c40754e901c8f0adabf220, type: 3}
+  - difficulty: 1
+    prefab: {fileID: 2499700037370539053, guid: 68f72d5b236c33142a59fa9a80317bf9, type: 3}
+  - difficulty: 2
+    prefab: {fileID: 2499700037370539053, guid: afe4c3fba2a66b24d910b50119683673, type: 3}
 --- !u!4 &810039939
 Transform:
   m_ObjectHideFlags: 0
@@ -385,11 +391,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefabs:
   - difficulty: 0
-    cubePrefab: {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
+    prefab: {fileID: 8069965689780940277, guid: be890facc6f389a4e865d7d8855523d2, type: 3}
   - difficulty: 1
-    cubePrefab: {fileID: 1226343838704166835, guid: e83f31cf595eadf42bb914c066ac441f, type: 3}
+    prefab: {fileID: 1226343838704166835, guid: e83f31cf595eadf42bb914c066ac441f, type: 3}
   - difficulty: 2
-    cubePrefab: {fileID: 451608518045246614, guid: aa5e8b0a66f26fe4fbb80f441d009da4, type: 3}
+    prefab: {fileID: 451608518045246614, guid: aa5e8b0a66f26fe4fbb80f441d009da4, type: 3}
 --- !u!4 &893744795
 Transform:
   m_ObjectHideFlags: 0

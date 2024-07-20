@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Brain.Core
 {
     public class PlaneGenerator : MonoBehaviour
     {
-        [SerializeField] private GameObject planePrefab = null;
+        [SerializeField] private List<PrefabWrapper> planePrefabs = null;
+
+        private Dictionary<Difficulty, GameObject> planePrefabDic = new Dictionary<Difficulty, GameObject>();
 
         private List<Vector3Int> occupiedPositions = null;
         private int sideLength = 3;
@@ -17,12 +20,14 @@ namespace Brain.Core
         private GameObject rootCube = null;
         private GameObject plane = null;
 
-        public CubeDetector Init(GameObject rootCube, int sideLength)
+        public CubeDetector Init(GameObject rootCube, int sideLength, Difficulty difficulty)
         {
             this.rootCube = rootCube;
             this.sideLength = sideLength;
 
-            plane = Instantiate(planePrefab);
+            planePrefabDic = planePrefabs.ToDictionary(x => x.difficulty, x => x.prefab);
+
+            plane = Instantiate(planePrefabDic[difficulty]);
             plane.transform.position = new Vector3(0, 0, 10f);
 
             cubeDetector = plane.GetComponent<CubeDetector>();

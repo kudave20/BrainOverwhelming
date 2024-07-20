@@ -28,7 +28,7 @@ namespace Brain.GameFlow
             var (rootCube, sideLength) = cubeGenerator.Init(planeGenerator, difficulty);
             cubeController = rootCube.GetComponent<CubeController>();
             cubeController.Init();
-            cubeDetector = planeGenerator.Init(rootCube, sideLength);
+            cubeDetector = planeGenerator.Init(rootCube, sideLength, difficulty);
             inputReceiver.Init(cubeController);
 
             // 게임 진행

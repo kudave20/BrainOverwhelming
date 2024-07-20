@@ -4,16 +4,9 @@ using UnityEngine;
 
 namespace Brain.Core
 {
-    [System.Serializable]
-    class CubeWrapper
-    {
-        public Difficulty difficulty;
-        public GameObject cubePrefab;
-    }
-
     public class CubeGenerator : MonoBehaviour
     {
-        [SerializeField] private List<CubeWrapper> cubePrefabs = null;
+        [SerializeField] private List<PrefabWrapper> cubePrefabs = null;
 
         private Dictionary<Difficulty, GameObject> cubePrefabDic = new Dictionary<Difficulty, GameObject>();
 
@@ -41,7 +34,7 @@ namespace Brain.Core
         {
             this.planeGenerator = planeGenerator;
 
-            cubePrefabDic = cubePrefabs.ToDictionary(x => x.difficulty, x => x.cubePrefab);
+            cubePrefabDic = cubePrefabs.ToDictionary(x => x.difficulty, x => x.prefab);
 
             rootCube = Instantiate(cubePrefabDic[difficulty]);
             
