@@ -1,4 +1,5 @@
 using Brain.Core;
+using Brain.UI;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Brain.GameFlow
         [SerializeField] private CubeGenerator cubeGenerator = null;
         [SerializeField] private PlaneGenerator planeGenerator = null;
         [SerializeField] private InputReceiver inputReceiver = null;
+        [SerializeField] private UIManager uiManager = null;
 
         [SerializeField] private Difficulty difficulty = Difficulty.Easy;
 
@@ -58,6 +60,7 @@ namespace Brain.GameFlow
                     Debug.Log("Stage Clear!");
                     cubeGenerator.ClearCube();
                     planeGenerator.ClearPlane();
+                    uiManager.updateSuccess();
                 }
                 else
                 {
